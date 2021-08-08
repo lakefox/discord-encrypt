@@ -1,0 +1,22 @@
+{
+    "name": "LakeFox Encrypt",
+    "version": "0.0.1",
+    "manifest_version": 2,
+    "description": "Send encrypted messages anywhere on the web.",
+    "homepage_url": "http://lakefox.net",
+    "icons": {
+        "32": "icon-32.png"
+    },
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_title": "Start Encrypting Messages"
+    },
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["content.js", "encryption.js"],
+        "run_at": "document_idle"
+    }],
+    "permissions": [
+        "tabs", "<all_urls>", "activeTab"
+    ]
+}
