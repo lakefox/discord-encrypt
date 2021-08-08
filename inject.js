@@ -4,7 +4,7 @@ let template = `
         <div style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: #010101; opacity: 0.7;"></div>
         <div id="password-alert" style="display: flex; align-items: center; align-content: center; justify-content: space-between; position: absolute; top: -100px; transition: 300ms ease; left: 50%; transform: translateX(-50%); background-color: #edf2f4; width: 300px; border-radius: 5px; text-align: center;">
             <span style="flex-grow: 1; font-family: monospace; font-size: 20px; padding: 20px 10px; border-right: 1px solid #f27f7d; background-color: #ef6461; color: white; border-radius: 5px 0 0 5px;">!</span>
-            <h1 style="flex-grow: 2; font-family: sans-serif; color: #212121;">You Must Enter a Password!</h1>
+            <h1 style="flex-grow: 2; font-family: sans-serif; color: #212121;">Please Enter a Password</h1>
         </div>
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; padding: 10px; background-color: #edf2f4; border-radius: 5px;">
             <input type="password" placeholder="Password" id="password" style="box-sizing: border-box; width: 100%; resize: none; padding: 10px 7px; color: 2F3737; outline: none; font-size: 14px; border: none; border-radius: 5px; font-family: sans-serif;">
@@ -75,18 +75,6 @@ document.querySelector("#encrypt").addEventListener('click', () => {
 })
 
 document.querySelector("#decrypt").addEventListener('click', () => {
-    let x = findEncryptedMessages();
-    if (x.length > encryptedMessages.length) {
-        for (i = 0; i < x.length; i++) {
-            encryptedMessages.push(x[i]);
-        }
-    } else if (x.length < encryptedMessages.length) {
-        for (i = 0; i < x.length; i++) {
-            encryptedMessages.push(x[i]);
-        }
-    } else if (x.length == 0) {
-        // Do nothing
-    }
     document.getElementById("encrypt-page").style.display = 'block';
     decrypt(findEncryptedMessages(), passphrase);
 })
