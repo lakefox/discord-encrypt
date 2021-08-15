@@ -1,12 +1,12 @@
 let template = `
-<div style="position: fixed; z-index: 10000;">
+<div style="position: fixed; z-index: 10000;" id="injectScript">
     <div id="password-modal" style="display: none; position: fixed; top: 0; bottom: 0; left: 0; right: 0; z-index: 10000;">
         <div style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: #010101; opacity: 0.7;"></div>
-        <div id="password-alert" style="display: flex; align-items: center; align-content: center; justify-content: space-between; position: absolute; top: -100px; transition: 300ms ease; left: 50%; transform: translateX(-50%); background-color: #edf2f4; width: 300px; border-radius: 5px; text-align: center;">
+        <div id="password-alert" style="height: 63px;font-size: 9px;display: flex; align-items: center; align-content: center; justify-content: space-between; position: absolute; top: -100px; transition: 300ms ease; left: 50%; transform: translateX(-50%); background-color: #edf2f4; width: 300px; border-radius: 5px; text-align: center;">
             <span style="flex-grow: 1; font-family: monospace; font-size: 20px; padding: 20px 10px; border-right: 1px solid #f27f7d; background-color: #ef6461; color: white; border-radius: 5px 0 0 5px;">!</span>
             <h1 style="flex-grow: 2; font-family: sans-serif; color: #212121;">Please Enter a Password</h1>
         </div>
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; padding: 10px; background-color: #edf2f4; border-radius: 5px;">
+        <div style="max-width: 90%; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; padding: 10px; background-color: #edf2f4; border-radius: 5px;">
             <input type="password" placeholder="Password" id="password" style="box-sizing: border-box; width: 100%; resize: none; padding: 10px 7px; color: 2F3737; outline: none; font-size: 14px; border: none; border-radius: 5px; font-family: sans-serif;">
             <div style="display: flex; align-items: center; align-content: center; justify-content: space-around; margin-top: 10px;">
                 <input type="button" value="Continue" id="password-continue" style="width: 100%; flex-grow: 1; cursor: pointer; outline: none; border-radius: 5px 0 0 5px; border: none; font-family: sans-serif; font-size: 14px; padding: 10px 0; background-color: #06d6a0; color: white;">
@@ -16,7 +16,7 @@ let template = `
     <div id="modal" style="display: none; position: fixed; top: 0; bottom: 0; left: 0; right: 0; z-index: 10000;">
         <div style="position: fixed; top: 0; bottom: 0; left: 0; right: 0; background-color: #010101; opacity: 0.7;"></div>
         <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; padding: 10px; background-color: #edf2f4; border-radius: 5px;">
-            <textarea placeholder="Message..." id="message" autofocus style="box-sizing: border-box; width: 100%; resize: none; padding: 10px 7px; color: 2F3737; outline: none; font-size: 14px; border: none; border-radius: 5px; font-family: sans-serif; height: 125px;"></textarea>
+            <textarea placeholder="Message..." id="messagedvcgjfytdur" autofocus style="box-sizing: border-box; width: 100%; resize: none; padding: 10px 7px; color: 2F3737; outline: none; font-size: 14px; border: none; border-radius: 5px; font-family: sans-serif; height: 125px;"></textarea>
             <div style="display: flex; align-items: center; align-content: center; justify-content: space-around; margin-top: 10px;">
                 <input type="button" value="Continue" id="continue" style="width: 75%; flex-grow: 1; cursor: pointer; outline: none; border-radius: 5px 0 0 5px; border: none; font-family: sans-serif; font-size: 14px; padding: 15px 0; background-color: #06d6a0; color: white;">
                 <input type="button" value="Close" id="close" style="width: 25%; flex-grow: 1; cursor: pointer; outline: none; border-radius: 0 5px 5px 0; border: none; font-family: sans-serif; font-size: 14px; padding: 15px 0; background-color: #ef6461; color: white;">
@@ -53,9 +53,9 @@ document.querySelector("#password-continue").addEventListener('click', () => {
 })
 
 document.querySelector("#encrypt-page").addEventListener('click', () => {
-    encryptedMessages = updateEncryptedMessages(encryptedMessages);
     document.getElementById('encrypt-page').style.display = 'none';
-    encrypt(encryptedMessages, passphrase);
+    encrypt(passphrase);
+    document.querySelector(".writeup").style.lineBreak = "anywhere";
 })
 
 document.querySelector("#password").addEventListener("keydown", (event) => {
@@ -71,19 +71,20 @@ document.querySelector("#password").addEventListener("input", () => {
 
 document.querySelector("#encrypt").addEventListener('click', () => {
     document.getElementById("modal").style.display = "block";
-    document.querySelector("#message").focus();
+    document.querySelector("#messagedvcgjfytdur").focus();
 })
 
 document.querySelector("#decrypt").addEventListener('click', () => {
     document.getElementById("encrypt-page").style.display = 'block';
     decrypt(findEncryptedMessages(), passphrase);
+    document.querySelector(".writeup").style.lineBreak = "auto";
 })
 
 document.querySelector("#continue").addEventListener('click', () => {
-    let message = document.querySelector("#message").value;
+    let message = document.querySelector("#messagedvcgjfytdur").value;
     let encrypted = `encrypt_begin ${cipherHash(message, passphrase)} encrypt_end`;
-    document.querySelector("#message").value = encrypted;
-    document.getElementById("message").select();
+    document.querySelector("#messagedvcgjfytdur").value = encrypted;
+    document.getElementById("messagedvcgjfytdur").select();
     document.execCommand("copy");
     document.querySelector("#continue").value = "Text Copied ✓";
     setTimeout(() => {
@@ -92,7 +93,7 @@ document.querySelector("#continue").addEventListener('click', () => {
     }, 500);
 })
 
-document.querySelector("#message").addEventListener("keydown", (event) => {
+document.querySelector("#messagedvcgjfytdur").addEventListener("keydown", (event) => {
     if (event.keyCode === 13) {
         event.preventDefault();
         document.querySelector("#continue").click();
@@ -104,23 +105,11 @@ document.querySelector("#close").addEventListener('click', () => {
 })
 
 function resetModal() {
-    document.querySelector("#message").value = "";
+    document.querySelector("#messagedvcgjfytdur").value = "";
     document.querySelector("#continue").value = "Continue";
 }
 
 let encryptedMessages = findEncryptedMessages();
-
-function updateEncryptedMessages(arr) {
-    updatedMessages = findEncryptedMessages();
-    for (var i = 0; i < updatedMessages.length; i++) {
-        if (arr.includes(updatedMessages[i])) {
-            break;
-        } else {
-            arr.push(updatedMessages[i]);
-        }
-    }
-    return arr;
-}
 
 function findEncryptedMessages() {
     let xpath = `//*[text()[contains(., 'encrypt_begin ')]]`;
@@ -142,21 +131,20 @@ function findElementByContent(content) {
 */
 
 function decrypt(elements, password) {
-    for (var i = 0; i < elements.length; i++) {
-        let element = elements[i];
-        msg = element.innerHTML.toString().replace("encrypt_begin ", "").replace(" encrypt_end", "");
-        element.innerHTML = `${unCipherHash(msg, password)}`;
-    }
+  for (var i = 0; i < elements.length; i++) {
+      let element = elements[i];
+      msg = element.innerHTML.split("encrypt_begin ")[1].split(" encrypt_end")[0];
+      element.innerHTML = `${element.innerHTML.split("encrypt_begin ")[0]}<encrypt>${unCipherHash(msg, password)}</encrypt>${element.innerHTML.split("encrypt_begin ")[1].split(" encrypt_end")[1]}`;
+  }
 }
 
 
-function encrypt(elements, password) {
-    for (var i = 0; i < elements.length; i++) {
-        let element = elements[i];
-        if (element.innerHTML.includes("encrypt_begin ")) {
-            // Do nothing
-        } else {
-            element.innerHTML = `encrypt_begin ${cipherHash(element.innerHTML.toString(), password)} encrypt_end`;
-        }
-    }
+function encrypt(password) {
+  let elements = document.querySelectorAll("encrypt");
+  for (var i = 0; i < elements.length; i++) {
+      let element = elements[i];
+      if (!element.innerHTML.includes("encrypt_begin ")) {
+          element.outerHTML = `encrypt_begin ${cipherHash(element.outerHTML.slice(9,-10), password)} encrypt_end`;
+      }
+  }
 }
